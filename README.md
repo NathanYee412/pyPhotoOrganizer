@@ -3,6 +3,10 @@ Simple (File)photo organizer using Python.
 This program will sort a given directory by file creation date. 
 Use is not limited to photos only. 
 
+## Use Case:
+I want to back up photos from an SD card onto a Hard drive.
+I would first copy all of the photos that I would want to backup, then run this program onto the hard drive. 
+
 # How to Use
 1. Download code
 2. Open Terminal with Python3 installed
