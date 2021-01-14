@@ -1,11 +1,12 @@
 import os
 import datetime
 import shutil
+import tkinter as tk
+from tkinter import filedialog, messagebox
 
-# print(entry.stat().st_ctime)
-# print('time: ',datetime.datetime.fromtimestamp(entry.stat().st_ctime)  )
 
 
+# Sort a directory by creating folders based on file creation date
 def setKeyValue(base_path):
     basepath = base_path
     filedate = {}
@@ -14,32 +15,22 @@ def setKeyValue(base_path):
         for entry in entries:
             if entry.is_file():
                 filedate[entry.name] = datetime.datetime.fromtimestamp(entry.stat().st_ctime)
+            
+            # create folder name using file creation date
+            foldername = str(filedate[entry.name])
 
-    return filedate
+            if not os.path.exists(base_path+'/'+foldername[:10]):
+                
+                # create a directory using the basepath and foldername 
+                os.makedirs(base_path+'/'+foldername[:10])
+                shutil.move(base_path+'/'+entry.name, base_path+'/'+foldername[:10]+'/'+entry.name)
+            else:
+                shutil.move(base_path+'/'+entry.name, base_path+'/'+foldername[:10]+'/'+entry.name)
 
-#print dictionary of files 
-def printDict(myDict):
-    for x in myDict:
-        print(x, ' ', myDict[x])
+# GUI implementation
+window = tk.Tk(className="FileOrganizer")
 
 
-def organizeFiles():
-    for file_ in list_:
-        name,ext = os.path.splitext(file_)
-        print(name)
-        #Stores the extension type
-        ext = ext[1:]
-        #If it is directory, it forces the next iteration
-        if ext == '':
-            continue
-        #If a directory with the name 'ext' exists, it moves the file to that directory
-        if os.path.exists(path+'/'+ext):
-        shutil.move(path+'/'+file_,path+'/'+ext+'/'+file_)
-        #If the directory does not exist, it creates a new directory
-        else:
-            os.makedirs(path+'/'+ext)
-            shutil.move(path+'/'+file_,path+'/'+ext+'/'+file_)
 
 if __name__ == "__main__":
     mykv = setKeyValue(r'C:\Users\nyee\Desktop\testphotodir')
-    printDict(mykv)
